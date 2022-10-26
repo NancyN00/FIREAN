@@ -1,7 +1,9 @@
 package com.example.firean
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.widget.Button
@@ -13,26 +15,65 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        Log.i("MYTAG", "MainActivity ; OnCreate")
         val greetingTextView =  findViewById<TextView>(R.id.etName)
         val inputField = findViewById<EditText>(R.id.firename)
         val submitButton = findViewById<Button>(R.id.fireb)
         val offersButton = findViewById<Button>(R.id.btnof)
-
+        var enteredName = ""
         submitButton.setOnClickListener {
-            val enteredName = inputField.text.toString()
+             enteredName = inputField.text.toString()
             if (enteredName == "") {
                 offersButton.visibility = INVISIBLE
                 greetingTextView.text = ""
-                   Toast.makeText(this@MainActivity, "Please Enter Your Name",
+                   Toast.makeText(this@MainActivity,
+                       "Please Enter Your Name",
                        Toast.LENGTH_SHORT).show()
             } else {
                 val message = "Welcome $enteredName "
+             //   Log.i("MYTAG", message)
                 greetingTextView.text = message
+                //Log.i("MYTAG", "After displaying message on the textview")
                 inputField.text.clear()
                 offersButton.visibility = VISIBLE
             }
         }
 
+        offersButton.setOnClickListener {
+            val intent = Intent(this,Offer::class.java)
+            intent.putExtra("USER", enteredName)
+            startActivity(intent)
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        Log.i("MYTAG", "MainActivity ; OnStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.i("MYTAG", "MainActivity ; OnResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.i("MYTAG", "MainActivity ; OnPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.i("MYTAG", "MainActivity ; OnStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i("MYTAG", "MainActivity ; OnDestroy")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.i("MYTAG", "MainActivity ; OnRestart")
     }
 }
